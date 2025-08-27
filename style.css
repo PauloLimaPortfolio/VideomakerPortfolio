@@ -345,7 +345,7 @@ header .socials a {
 
 .logo-grid{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  V0px, 1fr));
   gap: 12px;
 }
 .logo{
@@ -356,4 +356,208 @@ header .socials a {
 /* Pequenas melhorias de integração */
 #prova-social .depo-card, #prova-social .stat, #prova-social .logo { 
   animation: fadeUp .6s ease forwards; opacity:0; transform:translateY(12px);
+}
+
+
+/* === Hero Header with elegant background image === */
+header.hero {
+  position: relative;
+  padding: 3.2rem 1.5rem 2.2rem;
+  background-image: linear-gradient( to bottom, rgba(10,10,10,0.7), rgba(10,10,10,0.95) ),
+    url('images/banner.jpg');
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid #151515;
+}
+header.hero::after{
+  /* subtle top glow separator */
+  content:"";
+  position:absolute; left:0; right:0; bottom:-1px; height:1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+}
+
+/* Make title area pop a bit over the background */
+header.hero h1,
+header.hero .subtitle,
+header.hero .socials { position: relative; z-index: 1; text-shadow: 0 1px 12px rgba(0,0,0,.35); }
+
+/* Keep legacy logo card animation consistent */
+#prova-social .client-item {
+  background:#0b0b0b;
+  border:1px solid #222;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  height:80px;
+  width:100%;
+  position:relative;
+  z-index:1;
+}
+
+
+/* largura padrão */
+}
+
+.client-avatar {
+  width:80px;
+  height:100%;
+  background-color:#999;
+  flex-shrink:0;
+  object-fit:cover;
+}
+
+.client-name {
+  flex:1;
+  display:flex;
+  align-items:center;
+  height:100%;
+  padding:0 12px;
+  font-weight:700;
+  font-size:0.95rem;
+  line-height:1.1;
+  color:#cbd5e1;
+  letter-spacing:.01em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+
+/* alinha verticalmente */
+  justify-content:flex-start;
+  overflow:hidden;
+  width:220px;
+  height:70px; /* altura fixa igual ao avatar */
+}
+
+.client-avatar {
+  width:80px;
+  height:100%;
+  background-color:#999;
+  flex-shrink:0;
+  object-fit:cover;
+}
+
+.client-name {
+  flex:1;
+  display:flex;
+  align-items:center;
+  height:100%;
+  padding:0 12px;
+  font-weight:700;
+  font-size:0.95rem;
+  line-height:1.1;
+  color:#cbd5e1;
+  letter-spacing:.01em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+
+/* largura maior */
+  height:80px;   /* altura maior */
+}
+
+.client-avatar {
+  width:80px;
+  height:100%;
+  background-color:#999;
+  flex-shrink:0;
+  object-fit:cover;
+}
+
+.client-name {
+  flex:1;
+  display:flex;
+  align-items:center;
+  height:100%;
+  padding:0 12px;
+  font-weight:700;
+  font-size:0.95rem;
+  line-height:1.1;
+  color:#cbd5e1;
+  letter-spacing:.01em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+
+/* === Correção final: texto não será mais cortado === */
+.client-item {
+  background:#0b0b0b;
+  border:1px solid #222;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  height:80px;
+  width:100%;
+  position:relative;
+  z-index:1;
+}
+
+.client-avatar {
+  width:80px;
+  height:100%;
+  background-color:#999;
+  flex-shrink:0;
+  object-fit:cover;
+}
+
+.client-name {
+  flex:1;
+  display:flex;
+  align-items:center;
+  height:100%;
+  padding:0 12px;
+  font-weight:700;
+  font-size:0.95rem;
+  line-height:1.1;
+  color:#cbd5e1;
+  letter-spacing:.01em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+
+/* Avatar como <img> */
+.client-avatar {
+  display:block;
+  width:80px;
+  height:100%;
+  object-fit:cover;
+}
+
+
+
+/* === Selo de verificado (estilo Instagram) ao lado do nome === */
+.client-name{
+  display: inline-flex;            /* garante que o selo venha colado no texto */
+  align-items: center;
+  gap: 8px;                        /* espaço entre nome e selo */
+}
+
+.client-name::after{
+  content: "";
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  /* SVG inline (ícone em estilo Instagram: azul com check branco) */
+  background: no-repeat center / contain
+    url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>\
+  <defs>\
+    <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>\
+      <stop offset='0%' stop-color='%2352a8ff'/>\
+      <stop offset='100%' stop-color='%230072ff'/>\
+    </linearGradient>\
+  </defs>\
+  <circle cx='12' cy='12' r='10' fill='url(%23g)'/>\
+  <path d='M10.2 13.8 8.2 11.8a1 1 0 0 0-1.4 1.4l2.7 2.7a1 1 0 0 0 1.4 0l6-6a1 1 0 1 0-1.4-1.4l-5.3 5.3z' fill='%23fff'/>\
+</svg>");
+  filter: drop-shadow(0 0 2px rgba(0,0,0,.25));
 }
