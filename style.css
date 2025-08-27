@@ -7,7 +7,7 @@ body {
 }
 header {
   text-align: center;
-  padding: 2rem;
+  padding: 1rem 2rem 0.5rem;
 }
 header img {
   border-radius: 50%;
@@ -18,12 +18,19 @@ header img {
   object-fit: cover;
 }
 h1 {
-  font-size: 2.5rem;
-  margin: 1rem 0 0.5rem;
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  margin: 0.2rem 0 0.2rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  font-weight: 800;
+  font-family: 'Poppins', 'Segoe UI', Roboto, sans-serif;
 }
 .subtitle {
   color: #aaa;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  margin-top: 0;
+  line-height: 1.35;
 }
 .socials a {
   margin: 0 10px;
@@ -33,8 +40,8 @@ h1 {
 }
 section {
   max-width: 1000px;
-  margin: 2rem auto;
-  padding: 1rem;
+  margin: 0.8rem auto;
+  padding: 0.8rem;
   text-align: center;
 }
 .projetos {
@@ -68,4 +75,285 @@ section {
 }
 .btn:hover {
   background: #1d4ed8;
+}
+
+/* ===== Microinterações nas miniaturas (iframes) ===== */
+.thumb{
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: transform .25s ease, filter .25s ease, box-shadow .25s ease;
+  will-change: transform, filter;
+}
+.thumb iframe{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio: 16/9;
+  border:0;
+  border-radius: 10px;
+}
+/* Hover sutil: zoom + sombra */
+.thumb:hover{
+  transform: scale(1.03);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+/* Banho de cor suave por alguns segundos */
+.thumb::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(37,99,235,.35) 0%, rgba(37,99,235,.2) 40%, transparent 75%);
+  transition: opacity .4s ease;
+}
+.thumb:hover::after{
+  animation: tintPulse 2.8s ease;
+}
+@keyframes tintPulse{
+  0%{opacity:.28}
+  35%{opacity:.18}
+  70%{opacity:.10}
+  100%{opacity:.06}
+}
+
+/* ===== Animações suaves no texto (fade-up) ===== */
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(20px)}
+  to{opacity:1; transform:translateY(0)}
+}
+
+/* Aplicação padrão: títulos, parágrafos, botões e cards entram suavemente */
+h1, h2, h3, p, .btn, .card{
+  animation: fadeUp .8s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Stagger básico para elementos em grid de cards (ajuste se sua grid usa outra classe) */
+.grid .card:nth-child(1){ animation-delay: .1s; }
+.grid .card:nth-child(2){ animation-delay: .2s; }
+.grid .card:nth-child(3){ animation-delay: .3s; }
+.grid .card:nth-child(4){ animation-delay: .4s; }
+.grid .card:nth-child(5){ animation-delay: .5s; }
+.grid .card:nth-child(6){ animation-delay: .6s; }
+
+/* Acessibilidade: respeita usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce){
+  .thumb, .card, .btn, h1, h2, h3, p{
+    transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+
+/* ===== Staggered fadeUp animations ===== */
+header h1 {
+  animation: fadeUp .8s ease .1s forwards;
+}
+header .subtitle {
+  animation: fadeUp .8s ease .3s forwards;
+}
+header .socials a:nth-child(1) {
+  animation: fadeUp .8s ease .5s forwards;
+}
+header .socials a:nth-child(2) {
+  animation: fadeUp .8s ease .7s forwards;
+}
+header .socials a:nth-child(3) {
+  animation: fadeUp .8s ease .9s forwards;
+}
+
+/* Stagger para parágrafos da seção sobre mim */
+section p:nth-child(1) {
+  animation: fadeUp .8s ease .2s forwards;
+}
+section p:nth-child(2) {
+  animation: fadeUp .8s ease .4s forwards;
+}
+section p:nth-child(3) {
+  animation: fadeUp .8s ease .6s forwards;
+}
+
+
+/* ===== Correção para emojis nas redes sociais ===== */
+header .socials a {
+  opacity: 1 !important; 
+  transform: none !important;
+  animation: none !important;
+}
+
+/* Apenas o texto dentro do link terá animação suave */
+header .socials a .text {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeUp .8s ease forwards;
+}
+
+header .socials a:nth-child(1) .text { animation-delay: .5s; }
+header .socials a:nth-child(2) .text { animation-delay: .7s; }
+header .socials a:nth-child(3) .text { animation-delay: .9s; }
+
+
+/* ===== Ajuste: emojis fixos (sem animação) ===== */
+header .socials {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeUp .8s ease .5s forwards;
+}
+/* Não animar os ícones (evita “pulo”) */
+header .socials a {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+  will-change: auto;
+}
+
+
+/* ===== Lazy Load YouTube Thumbnails ===== */
+.thumb.video {
+  position: relative;
+  cursor: pointer;
+}
+.thumb.video img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+}
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 68px;
+  height: 48px;
+  background: url('https://www.gstatic.com/images/icons/material/system/1x/play_circle_filled_white_48dp.png') no-repeat center center;
+  background-size: contain;
+  transform: translate(-50%, -50%);
+  opacity: 0.85;
+}
+.thumb.video:hover .play-button {
+  opacity: 1;
+}
+
+
+/* ===== Lazy YouTube thumbnails ===== */
+.thumb.video { position: relative; cursor: pointer; }
+.thumb.video img { width: 100%; height: auto; display: block; border-radius: 10px; }
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 68px;
+  height: 48px;
+  transform: translate(-50%, -50%);
+  opacity: 0.9;
+  background: url('https://www.gstatic.com/images/icons/material/system/1x/play_circle_filled_white_48dp.png') no-repeat center center;
+  background-size: contain;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.thumb.video:hover .play-button { opacity: 1; transform: translate(-50%, -50%) scale(1.03); }
+
+
+/* ===== Correção: miniaturas sem faixas pretas ===== */
+.thumb { aspect-ratio: 16/9; overflow: hidden; border-radius: 10px; }
+.thumb.video img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb.video iframe { width: 100%; height: 100%; display: block; }
+
+
+/* ===== Abas: Prova Social (tabs) ===== */
+#prova-social { max-width: 1100px; margin: 1.6rem auto; padding: 1rem; text-align: center; }
+#prova-social h2 { margin-bottom: .6rem; }
+
+.tabs {
+  display: inline-flex;
+  gap: 8px;
+  background: #0f0f0f;
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid #1f1f1f;
+}
+.tab {
+  appearance: none;
+  background: transparent;
+  color: #cbd5e1;
+  border: 0;
+  padding: .55rem .9rem;
+  border-radius: 10px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, transform .12s ease;
+}
+.tab:hover { transform: translateY(-1px); }
+.tab.is-active { background: #2563eb; color: white; }
+
+.tabs-panels { margin-top: 18px; }
+
+.tab-panel[hidden] { display: none; }
+.tab-panel {
+  text-align: left;
+  background: #101010;
+  border: 1px solid #1f1f1f;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+/* ===== Depoimentos ===== */
+.depoimentos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.depo-card {
+  background: #0d0d0d;
+  border: 1px solid #222;
+  border-radius: 12px;
+  padding: 14px;
+}
+.depo-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: #2563eb; color: #fff; display: grid; place-items: center;
+  font-weight: 800;
+}
+.depo-card h3 { margin: 0; font-size: 1rem; }
+.depo-card .cargo { margin: 2px 0 0; color: #94a3b8; font-size: .85rem; }
+.depo-text { margin: 10px 0 0; color: #e5e7eb; line-height: 1.5; }
+
+/* ===== Clientes atendidos ===== */
+.stats{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+.stat{
+  background:#0d0d0d; border:1px solid #222; border-radius:12px; padding:12px;
+}
+.stat-number{ display:block; font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight:800; color:#fff; }
+.stat-label{ display:block; font-size:.9rem; color:#94a3b8; }
+
+.logo-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+.logo{
+  background: #0b0b0b; border:1px solid #222; border-radius:12px; padding:14px;
+  display:flex; align-items:center; justify-content:center; color:#cbd5e1; font-weight:700;
+}
+
+/* Pequenas melhorias de integração */
+#prova-social .depo-card, #prova-social .stat, #prova-social .logo { 
+  animation: fadeUp .6s ease forwards; opacity:0; transform:translateY(12px);
 }
